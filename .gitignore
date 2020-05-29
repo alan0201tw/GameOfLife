@@ -1,0 +1,15 @@
+bin/
+main
+*.exe
+vendor/bin/premake/
+
+.vscode/
+*.lib
+
+# visual studio files
+bin-int/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+.vs/
