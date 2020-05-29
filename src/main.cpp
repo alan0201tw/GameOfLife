@@ -42,6 +42,11 @@ int main(int argc, char* argv[])
         }
         
         {
+            // this way the point might become [x0, y1], which is incorrect
+            // int x0 = std::min(lastPosX, x);
+            // int x1 = std::max(lastPosX, x);
+            // int y0 = std::min(lastPosY, y);
+            // int y1 = std::max(lastPosY, y);
             int x0 = lastPosX;
             int x1 = x;
             int y0 = lastPosY;
