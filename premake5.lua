@@ -1,6 +1,6 @@
-workspace "SimpleFluid"
+workspace "GameOfLife"
     architecture "x64"
-    startproject "SimpleFluid"
+    startproject "GameOfLife"
 
     configurations
     {
@@ -13,7 +13,7 @@ workspace "SimpleFluid"
     -- cfg - configuration
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-project "SimpleFluid"
+project "GameOfLife"
     location "."
     kind "ConsoleApp"
     language "C++"
@@ -36,10 +36,12 @@ project "SimpleFluid"
 
     libdirs
     {
+        "vendor/lib"
     }
 
     links
     {
+        "glfw3.lib"
     }
 
     postbuildcommands
