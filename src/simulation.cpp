@@ -14,23 +14,6 @@ GOLSimulator::GOLSimulator(size_t width, size_t height)
     {
         m_cellStates[i].resize(width);
     }
-
-    // TEST
-    for(size_t i = 0; i < 53; ++i)
-    {
-        m_cellStates[i][50] = 1;
-    }
-
-    for(size_t i = 0; i < 53; ++i)
-    {
-        m_cellStates[i][60] = 1;
-    }
-
-    m_cellStates[100][102] = 1;
-    m_cellStates[101][100] = 1;
-    m_cellStates[101][102] = 1;
-    m_cellStates[102][101] = 1;
-    m_cellStates[102][102] = 1;
 }
 
 void GOLSimulator::Update()

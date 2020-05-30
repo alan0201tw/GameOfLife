@@ -17,22 +17,38 @@ int main(int argc, char* argv[])
     using namespace gol::gfx;
     using namespace gol::sim;
 
-    GOLSimulator simulator(640u, 640u);
+    const size_t simulationSpaceX = 64u;
+    const size_t simulationSpaceY = 64u;
+
+    GOLSimulator simulator(simulationSpaceX, simulationSpaceY);
 
     GFXUtility::Init();
     // insert per-frame update method here
     GFXUtility::onRender = [&](){
         GFXUtility::RenderSimulator(simulator);
-        simulator.Update();
+    };
+    int frameCounter = 0;
+    GFXUtility::onUpdate = [&](){
+        ++frameCounter;
+        // update every 5 frames
+        if(frameCounter >= 15)
+        {
+            simulator.Update();
+            frameCounter = 0;
+        }
     };
 
-    float lastPosX, lastPosY;
+    float lastPosX = 0.0f, lastPosY = 0.0f;
     bool isMouseJustReleased = true;
 
     GFXUtility::onMouseDrag = [&](float x, float y){
         // std::cout << "cursor Pos x = " << x << ", y = " << y << "\n";
         simulator.SetRunning(false);
         // interpolate cursor position
+
+        // transform x, y from screen space to simulation space
+        x *= (float)simulationSpaceX / GFXUtility::GetScreenWidth();
+        y *= (float)simulationSpaceY / GFXUtility::GetScreenHeight();
 
         if(isMouseJustReleased == true)
         {
@@ -76,10 +92,7 @@ int main(int argc, char* argv[])
                     y0 += sy;
                 }
             }
-            // simulator.SetAlive((size_t)tx, (size_t)ty);
         }
-
-        // simulator.SetAlive((size_t)x, (size_t)y);
 
         lastPosX = x;
         lastPosY = y;

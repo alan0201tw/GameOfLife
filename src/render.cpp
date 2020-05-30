@@ -6,6 +6,7 @@ namespace gol { namespace gfx {
 
 GLFWwindow* GFXUtility::m_window;
 std::function<void()> GFXUtility::onRender;
+std::function<void()> GFXUtility::onUpdate;
 std::function<void(int, int)> GFXUtility::onMouseDrag;
 std::function<void()> GFXUtility::onMouseRelease;
 
@@ -41,6 +42,7 @@ void GFXUtility::Init()
     
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     m_window = glfwCreateWindow(
         m_screenWidth, m_screenHeight, "ASCIIRenderer", NULL, NULL);
     if (m_window == nullptr)
@@ -96,7 +98,12 @@ void GFXUtility::MainLoop()
         // callback function
         if(onRender) // use the bool operator of std::function to determine if it is callable
         {
-            onRender();
+                onRender();
+        }
+        if(onUpdate)
+        {
+            if(glfwGetKey(m_window, GLFW_KEY_SPACE) != GLFW_PRESS)
+                onUpdate();
         }
 
         glfwSwapBuffers(m_window);
@@ -114,7 +121,8 @@ void GFXUtility::RenderSimulator(const gol::sim::GOLSimulator& sim)
 {
     auto states = sim.GetState();
 
-    glBegin(GL_POINTS);
+    // glBegin(GL_POINTS);
+    glBegin(GL_QUADS);
     {
         glColor3f(1,1,1);
         
@@ -124,7 +132,17 @@ void GFXUtility::RenderSimulator(const gol::sim::GOLSimulator& sim)
             {
                 if(states[i][j] > 0)
                 {
-                    glVertex2f(i, j);
+                    // transform from simulation space to screen space
+
+                    float x = (float)i * m_screenWidth / states.size();
+                    float x1 = (float)(i+1) * m_screenWidth / states.size();
+                    float y = (float)j * m_screenHeight / states[i].size();
+                    float y1 = (float)(j+1) * m_screenHeight / states[i].size();
+
+                    glVertex2f(x, y);
+                    glVertex2f(x, y1);
+                    glVertex2f(x1, y1);
+                    glVertex2f(x1, y);
                 }
             }
         }

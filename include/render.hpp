@@ -29,7 +29,11 @@ public:
 
     static void RenderSimulator(const gol::sim::GOLSimulator& sim);
 
+    static inline constexpr const int GetScreenWidth() { return m_screenWidth; }
+    static inline constexpr const int GetScreenHeight() { return m_screenHeight; }
+
     static std::function<void()> onRender;
+    static std::function<void()> onUpdate;
     static std::function<void(int, int)> onMouseDrag;
     static std::function<void()> onMouseRelease;
 };
