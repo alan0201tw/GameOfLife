@@ -44,7 +44,7 @@ void GFXUtility::Init()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     m_window = glfwCreateWindow(
-        m_screenWidth, m_screenHeight, "ASCIIRenderer", NULL, NULL);
+        m_screenWidth, m_screenHeight, "GameOfLife", NULL, NULL);
     if (m_window == nullptr)
     {
         glfwTerminate();
