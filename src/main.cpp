@@ -30,8 +30,12 @@ int main(int argc, char* argv[])
     int frameCounter = 0;
     GFXUtility::onUpdate = [&](){
         ++frameCounter;
-        // update every 5 frames
-        if(frameCounter >= 15)
+        // update every multiple frames
+        // this is a quick-hack for lowering frame-rat
+        // a more formal implementation will do time comparison between
+        // every two frames and wait for an interval of time base on
+        // how much time is used during the rendering of last frame
+        if(frameCounter >= 60)
         {
             simulator.Update();
             frameCounter = 0;
