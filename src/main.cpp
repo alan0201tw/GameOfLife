@@ -11,14 +11,15 @@
 
 #include "render.hpp"
 #include "simulation.hpp"
+#include "clock.hpp"
 
 int main(int argc, char* argv[])
 {
     using namespace gol::gfx;
     using namespace gol::sim;
 
-    const size_t simulationSpaceX = 64u;
-    const size_t simulationSpaceY = 64u;
+    const size_t simulationSpaceX = 128u;
+    const size_t simulationSpaceY = 128u;
 
     GOLSimulator simulator(simulationSpaceX, simulationSpaceY);
 
@@ -27,18 +28,18 @@ int main(int argc, char* argv[])
     GFXUtility::onRender = [&](){
         GFXUtility::RenderSimulator(simulator);
     };
-    int frameCounter = 0;
+    float accumulator = 0.0f;
+    const float deltaTime = 1.0f / 20.0f;
     GFXUtility::onUpdate = [&](){
-        ++frameCounter;
-        // update every multiple frames
-        // this is a quick-hack for lowering frame-rat
-        // a more formal implementation will do time comparison between
-        // every two frames and wait for an interval of time base on
-        // how much time is used during the rendering of last frame
-        if(frameCounter >= 60)
+        accumulator += (float)Clock::Elapsed();
+        Clock::Reset();
+
+        accumulator = std::clamp(accumulator, 0.0f, 0.1f);
+        // Update : Fix the update rate at 60 updates per second
+        while(accumulator >= deltaTime)
         {
             simulator.Update();
-            frameCounter = 0;
+            accumulator -= deltaTime;
         }
     };
 
