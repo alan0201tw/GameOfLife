@@ -10,3 +10,5 @@ A Conway's Game of Life simulation application with interactivity!
 ## Interactivity
 
 * Use Bresenham's line algorithm to improve mouse dragging results
+
+![Demo](./GOL.gif)
