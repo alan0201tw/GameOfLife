@@ -7,7 +7,7 @@ namespace gol { namespace gfx {
 GLFWwindow* GFXUtility::m_window;
 std::function<void()> GFXUtility::onRender;
 std::function<void()> GFXUtility::onUpdate;
-std::function<void(int, int)> GFXUtility::onMouseDrag;
+std::function<void(float, float)> GFXUtility::onMouseDrag;
 std::function<void()> GFXUtility::onMouseRelease;
 
 static bool s_isMouseButtonDown = false;

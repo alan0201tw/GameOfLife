@@ -8,6 +8,7 @@
 
 
 #include <iostream>
+#include <algorithm>
 
 #include "render.hpp"
 #include "simulation.hpp"
@@ -68,10 +69,10 @@ int main(int argc, char* argv[])
             // int x1 = std::max(lastPosX, x);
             // int y0 = std::min(lastPosY, y);
             // int y1 = std::max(lastPosY, y);
-            int x0 = lastPosX;
-            int x1 = x;
-            int y0 = lastPosY;
-            int y1 = y;
+            int x0 = (int)lastPosX;
+            int x1 = (int)x;
+            int y0 = (int)lastPosY;
+            int y1 = (int)y;
 
             // Bresenham Algorithm
             // Ref : https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
@@ -83,7 +84,7 @@ int main(int argc, char* argv[])
             int err = dx + dy;  /* error value e_xy */
             while(true)
             {
-                simulator.SetAlive(x0, y0);
+                simulator.SetAlive((size_t)x0, (size_t)y0);
                 if(x0 == x1 && y0 == y1) break;
                 int e2 = 2 * err;
                 if(e2 >= dy)

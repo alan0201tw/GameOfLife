@@ -34,7 +34,7 @@ public:
 
     static std::function<void()> onRender;
     static std::function<void()> onUpdate;
-    static std::function<void(int, int)> onMouseDrag;
+    static std::function<void(float, float)> onMouseDrag;
     static std::function<void()> onMouseRelease;
 };
 
